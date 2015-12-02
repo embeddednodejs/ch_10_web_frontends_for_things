@@ -13,6 +13,8 @@ app.post('/LED', function(req, res) {
   var payload = jsonBody(req, res, send)
 
   console.log(payload);
+  res.write('ok');
+  res.end();
 });
 
 
