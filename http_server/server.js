@@ -1,9 +1,19 @@
 var express = require('express');
 var morgan = require('morgan')('dev');
 var ecstatic = require('ecstatic');
+var jsonBody = require('body/json');
+
+// setup server
 var app = express();
 app.use(morgan);
 app.use(ecstatic);
+
+// turn state of light
+app.post('/LED', function(req, res) {
+  var payload = jsonBody(req, res, send)
+
+  console.log(payload);
+});
 
 
 var five = require('johnny-five');
@@ -23,6 +33,5 @@ board.on('ready', function() {
 });
 
 function startupServer() {
-
   app.listen(port, '127.0.0.1');
 }
