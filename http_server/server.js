@@ -8,13 +8,6 @@ var app = express();
 app.use(morgan);
 app.use(ecstatic({ root: __dirname + '/static' }));
 
-app.post('/LED', function(req, res) {
-  jsonBody(req, res, updateState)
-
-  res.write('ok');
-  res.end();
-});
-
 // setup board
 var five = require('johnny-five');
 var Edison = require('edison-io');
@@ -41,6 +34,14 @@ function startupServer(led) {
       state.led == 1 ? led.on() : led.off();
     }
   }
+
+  app.post('/LED', function(req, res) {
+    jsonBody(req, res, updateState)
+  
+    res.write('ok');
+    res.end();
+  });
+
 
   app.listen(port);
 }
