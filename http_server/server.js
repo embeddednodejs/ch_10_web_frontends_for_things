@@ -6,7 +6,7 @@ var jsonBody = require('body/json');
 // setup server
 var app = express();
 app.use(morgan);
-app.use(ecstatic);
+app.use(ecstatic({ root: __dirname + '/static' }));
 
 // turn state of light
 app.post('/LED', function(req, res) {
@@ -35,5 +35,5 @@ board.on('ready', function() {
 });
 
 function startupServer() {
-  app.listen(port, '127.0.0.1');
+  app.listen(port);
 }
