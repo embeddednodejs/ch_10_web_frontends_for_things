@@ -1,0 +1,11 @@
+
+<script>
+  var ws = new WebSocket('ws://localhost:3474');
+
+  ws.onmessage = function(e) {
+      var timestamp = ((new Date()).getTime() / 1000)|0;
+      var data = JSON.parse(e.data);
+      var dataPoint = {time:  timestamp, y: data.analog};
+      console.log(dataPoint);
+  };
+</script>
