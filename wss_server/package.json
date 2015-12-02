@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "johnny-five": "^0.9.14"
+    "edison-io": "^0.8.18",
+    "johnny-five": "^0.9.14",
+    "ws": "^0.8.1"
   }
 }

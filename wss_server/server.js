@@ -4,7 +4,8 @@ var five = require('johnny-five');
 var Edison = require('edison-io');
 
 var board = new five.Board({
-    io: new Edison()
+    io: new Edison(),
+    repl: false
 });
 
 board.on("ready", function() {
