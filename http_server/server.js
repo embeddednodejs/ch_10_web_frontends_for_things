@@ -21,7 +21,11 @@ var board = new five.Board({
 
 board.on('ready', function() {
   var led = new five.Led(5);
-  led.blink(500);
+  led.on();
+  board.wait(100, function() {
+    led.off();
+  });
+
   startupServer(led);
 });
 
