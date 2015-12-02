@@ -42,10 +42,10 @@ function startupServer(led) {
   app.post('/LED', function(req, res) {
     jsonBody(req, res, updateState)
   
+    res.writeHead(200);
     res.write('ok');
     res.end();
   });
-
 
   app.listen(port);
 }
