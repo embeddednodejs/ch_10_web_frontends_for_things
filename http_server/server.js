@@ -8,14 +8,6 @@ var app = express();
 app.use(morgan);
 app.use(ecstatic({ root: __dirname + '/static' }));
 
-// turn state of light
-function updateState(err, payload) {
-  if (err) {
-    console.log(err);
-  }
-  console.log(payload);
-}
-
 app.post('/LED', function(req, res) {
   jsonBody(req, res, updateState)
 
@@ -23,7 +15,7 @@ app.post('/LED', function(req, res) {
   res.end();
 });
 
-
+// setup board
 var five = require('johnny-five');
 var Edison = require('edison-io');
 
@@ -37,9 +29,18 @@ var board = new five.Board({
 board.on('ready', function() {
   var led = new five.Led(5);
   led.blink(500);
-  startupServer();
+  startupServer(led);
 });
 
-function startupServer() {
+function startupServer(led) {
+  // turn state of light
+  function updateState(err, state) {
+    if (err) {
+      console.log(err);
+    } else {
+      state.led == 1 ? led.on() : led.off();
+    }
+  }
+
   app.listen(port);
 }

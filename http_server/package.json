@@ -1,5 +1,5 @@
 {
-  "name": "wss_server_led",
+  "name": "http_server_led",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
