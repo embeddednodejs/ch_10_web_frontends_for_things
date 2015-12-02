@@ -9,10 +9,16 @@ app.use(morgan);
 app.use(ecstatic({ root: __dirname + '/static' }));
 
 // turn state of light
-app.post('/LED', function(req, res) {
-  var payload = jsonBody(req, res, send)
-
+function updateState(err, payload) {
+  if (err) {
+    console.log(err);
+  }
   console.log(payload);
+}
+
+app.post('/LED', function(req, res) {
+  jsonBody(req, res, updateState)
+
   res.write('ok');
   res.end();
 });
