@@ -1,0 +1,33 @@
+<html>
+ <head>
+ <meta charset="utf-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <title>Blinking LED UI</title>
+
+<style>
+ body{
+ font:500 14px/21px 'Helvetica Neue', Helvetica, Arials;
+ padding:40px;
+ }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js">
+</script>
+
+ </head>
+ <body>
+   <p>Toggle the light</p>
+   <button id="toggle">Toggle!</button>
+   <script>
+     var state = 0;
+     function toggleLight() {
+       state = !state;
+       console.log(state);
+       $.post('/LED', '{"led": ' + state + '}');
+     }
+
+     $('#toggle').click(function() {
+         toggleLight();
+     });
+   </script>
+ </body>
+</html>

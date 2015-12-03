@@ -1,0 +1,93 @@
+<html>
+ <head>
+ <meta charset="utf-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <title>Blinking LED UI</title>
+
+<style>
+ body{
+ font:500 14px/21px 'Helvetica Neue', Helvetica, Arials;
+ padding:40px;
+ }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.0/backbone-min.js">
+</script>
+
+ </head>
+ <body>
+   <p>Adjust the light</p>
+   <div id="controls"></div>
+   <div id="status"></div>
+   <script>
+   var ControlsView = Backbone.View.extend({
+     template: _.template('\
+       <button id="darken">darken</button>  \
+       <button id="brighten">brighten</button>  \
+     '),
+     events: {
+       'click #brighten': 'handleBright',
+       'click #darken': 'handleDarken'
+     },
+     handleBright: function() {
+       this.model.brighten(); 
+     },
+     handleDarken: function() {
+       this.model.darken(); 
+     },
+     render: function() {
+       this.$el.html(this.template());
+       return this;
+     }
+   });
+   var StatusView = Backbone.View.extend({
+     template: _.template('\
+     <h1>Current intensity: <%= intensity %> \
+     '),
+     render: function() {
+       this.$el.html(this.template({intensity: this.model.get('intensity')}));
+     },
+     initialize: function() {
+       this.listenTo(this.model, 'change', this.render);
+     }
+   });
+
+   var LEDModel = Backbone.Model.extend({
+       defaults: {
+       intensity: 0
+     },
+     url: '/LED',
+     brighten: function() {
+       var intensity = this.get('intensity');
+       if (intensity < 255) {
+         intensity++
+       }
+       this.set('intensity', intensity);
+       this.save();
+     },
+     darken: function() {
+       var intensity = this.get('intensity');
+       if (intensity > 1) {
+         intensity--
+       }
+       this.set('intensity', intensity);
+       this.save();
+     }
+   });
+
+   var led = new LEDModel();
+   var controls = new ControlsView({el: '#controls', model: led});
+   var statusView = new StatusView({el: '#status', model: led});
+   
+   $(document).ready(function() {
+     controls.render();
+     statusView.render();
+   });
+
+   </script>
+
+ </body>
+</html>
