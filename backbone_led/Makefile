@@ -4,8 +4,8 @@ server=http://localhost:4000/LED
 # server=http://edison.local:4000/LED
 
 on:
-	curl -X POST -d '{"led": 1}' $(server)
+	curl -X POST -d '{"intensity": 255}' $(server)
 
 off:
-	curl -X POST -d '{"led": 0}' $(server)
+	curl -X POST -d '{"intensity": 0}' $(server)
 
