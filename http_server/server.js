@@ -10,17 +10,24 @@ app.use(ecstatic({ root: __dirname + '/static' }));
 
 // setup board
 var five = require('johnny-five');
-var Edison = require('edison-io');
+
+// adapters
+// var Edison = require('edison-io');
+// var Galileo = require('galileo-io');
+// var Beaglebone = require('beaglebone-io');
 
 var port = 4000;
 
+// instantiate board
 var board = new five.Board({
-    io: new Edison(),
+    // add different adapter if needed
+    // io: new Edison(),
     repl: false
 });
 
+var LED=13;
 board.on('ready', function() {
-  var led = new five.Led(5);
+  var led = new five.Led(LED);
   led.on();
   board.wait(100, function() {
     led.off();
