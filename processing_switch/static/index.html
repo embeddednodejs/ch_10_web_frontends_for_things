@@ -1,0 +1,45 @@
+<html>
+ <head>
+ <meta charset="utf-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <title>Blinking LED UI</title>
+
+<style>
+ body {
+   font:500 14px/21px 'Helvetica Neue', Helvetica, Arials;
+   padding:40px;
+ }
+</style>
+
+ <script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.19/p5.js"></script>
+
+ </head>
+ <body>
+
+ <script>
+   var yPos = 0;
+
+   function setup() {
+     createCanvas(900, 600);
+     x = width / 2;
+     y = height;
+     frameRate(30);
+   }
+
+   function draw() {
+     background(20);
+     rect(width/4, yPos, width/2, height/2);
+   }
+
+
+   var ws = new WebSocket('ws://localhost:4000');
+
+   ws.onmessage = function(e) {
+     var point = JSON.parse(e.data);
+     yPos = point.data;
+     console.log(yPos);
+   };
+ </script>
+
+ </body>
+</html>
