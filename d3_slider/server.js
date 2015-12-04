@@ -11,19 +11,22 @@ var port = 4000;
 // setup board
 var five = require('johnny-five');
 
-// adapters
+// board adapters
 // var Edison = require('edison-io');
 // var Galileo = require('galileo-io');
 // var Beaglebone = require('beaglebone-io');
 
 var board = new five.Board({
 //    io: new Edison(),
+    port: '/dev/cu.PL2303-00001214',
     repl: false
 });
 
 board.on("ready", function() {
   var led = new five.Led(13);
-  var slider = new five.Sensor("A1");
+  
+  // set the analog input here, eg. A0, A1, ..
+  var slider = new five.Sensor('A0');
   led.blink(500);
   startupServer(slider);
 });
